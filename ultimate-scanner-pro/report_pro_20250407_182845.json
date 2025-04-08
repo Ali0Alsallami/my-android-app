@@ -1,0 +1,11 @@
+{
+  "target": "https://testphp.vulnweb.com",
+  "duration": "0:00:11",
+  "results": {
+    "urls": [],
+    "intel": [],
+    "files": [],
+    "keys": [],
+    "js_endpoints": []
+  }
+}

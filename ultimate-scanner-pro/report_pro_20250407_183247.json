@@ -1,0 +1,84 @@
+{
+  "target": "http://testphp.vulnweb.com",
+  "duration": "0:00:02",
+  "results": {
+    "urls": [
+      {
+        "url": "http://testphp.vulnweb.com/index.html",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/robots.txt",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/dashboard",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/phpinfo.php",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/sitemap.xml",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/login",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/.env",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/admin.php",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/wp-login.php",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/backup.sql",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/config",
+        "status": 404,
+        "size": 0,
+        "content": null
+      },
+      {
+        "url": "http://testphp.vulnweb.com/admin",
+        "status": 200,
+        "size": 0,
+        "content": "<html>\r\n<head><title>Index of /admin/</title></head>\r\n<body>\r\n<h1>Index of /admin/</h1><hr><pre><a href=\"../\">../</a>\r\n<a href=\"create.sql\">create.sql</a>                                         11-May-2011 10:27                 523\r\n</pre><hr></body>\r\n</html>\r\n"
+      }
+    ],
+    "intel": [],
+    "files": [],
+    "keys": [],
+    "js_endpoints": []
+  }
+}

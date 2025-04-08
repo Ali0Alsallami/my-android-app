@@ -1,0 +1,181 @@
+#!/bin/bash
+
+# سكريبت تثبيت كالي لينكس كامل مع إصلاح الأخطاء السابقة
+# تنفيذ: nano install_kali.sh && chmod +x install_kali.sh && ./install_kali.sh
+
+# ------ إعدادات الألوان ------
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# ------ إعدادات التسجيل ------
+LOG_FILE="kali-install-$(date +%Y%m%d%H%M%S).log"
+exec > >(tee -i "$LOG_FILE")
+exec 2>&1
+
+# ------ دالات المساعدة ------
+clean_previous_attempts() {
+    echo -e "${YELLOW}[تنظيف]${NC} بدء عملية التنظيف..."
+    
+    targets=(
+        "kali-fs" "kali-rootfs.tar.xz" "start-kali" 
+        "kali.sh" ".kali-installed" "nh-kali"
+    )
+    
+    for target in "${targets[@]}"; do
+        if [[ -e "$target" ]]; then
+            echo -e "${BLUE}•${NC} إزالة: $target"
+            rm -rf "$target"
+        fi
+    done
+    
+    pkg clean >/dev/null 2>&1
+}
+
+check_dependencies() {
+    echo -e "${YELLOW}[التحقق]${NC} التحقق من المتطلبات..."
+    
+    dependencies=("proot" "wget" "curl" "tar" "xz-utils")
+    
+    for pkg in "${dependencies[@]}"; do
+        if ! command -v "$pkg" >/dev/null 2>&1; then
+            echo -e "${BLUE}•${NC} تثبيت: $pkg"
+            pkg install -y "$pkg" || exit 1
+        fi
+    done
+}
+
+install_kali() {
+    echo -e "${YELLOW}[تثبيت]${NC} بدء التثبيت الجديد..."
+    
+    # تنزيل rootfs
+    KALI_URL="https://kali.download/nethunter-images/current/rootfs/kalifs-arm64-minimal.tar.xz"
+    echo -e "${BLUE}•${NC} جاري التنزيل..."
+    wget "$KALI_URL" -O kali-rootfs.tar.xz || {
+        echo -e "${RED}[خطأ]${NC} فشل التنزيل!"
+        exit 1
+    }
+
+    # فك الضغط
+    echo -e "${BLUE}•${NC} فك الضغط..."
+    mkdir -p kali-fs
+    tar -xJf kali-rootfs.tar.xz -C kali-fs --exclude='dev/*' || {
+        echo -e "${RED}[خطأ]${NC} فشل فك الضغط!"
+        exit 1
+    }
+
+    touch .kali-installed
+}
+
+post_installation() {
+    echo -e "${YELLOW}[تهيئة]${NC} الإعدادات النهائية..."
+    
+    proot --link2symlink -0 -r kali-fs -b /dev -b /proc -b /sys /usr/bin/env -i \
+        HOME=/root \
+        PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin \
+        TERM=xterm \
+        /bin/bash -c "
+        apt update -y
+        apt full-upgrade -y
+        apt install -y kali-tools-top10 nmap metasploit-framework
+        echo 'alias ll=\"ls -alh\"' >> ~/.bashrc
+        echo 'export HISTSIZE=10000' >> ~/.bashrc
+    " || {
+        echo -e "${RED}[خطأ]${NC} فشل في التهيئة!"
+        exit 1
+    }
+}
+
+gui_installation() {
+    read -p "هل تريد تثبيت الواجهة الرسومية (XFCE4)؟ [y/N] " choice
+    if [[ "$choice" =~ [Yy] ]]; then
+        echo -e "${YELLOW}[GUI]${NC} تثبيت الواجهة..."
+        
+        proot --link2symlink -0 -r kali-fs -b /dev -b /proc -b /sys /usr/bin/env -i \
+            HOME=/root \
+            PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin \
+            TERM=xterm \
+            /bin/bash -c "
+            apt install -y kali-desktop-xfce xfce4-terminal x11-apps
+            apt clean
+        " || {
+            echo -e "${RED}[خطأ]${NC} فشل تثبيت الواجهة!"
+            exit 1
+        }
+    fi
+}
+
+create_launcher() {
+    echo -e "${YELLOW}[تشغيل]${NC} إنشاء اختصار..."
+    
+    cat <<'EOF' > start-kali
+#!/bin/bash
+
+# إعداد الألوان
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# أوامر PROOT الأساسية
+PROOT_CMD="proot \
+--link2symlink \
+--rootfs=\"\$PWD/kali-fs\" \
+-b /dev \
+-b /proc \
+-b /sys \
+-b /storage \
+/usr/bin/env -i \
+HOME=/root \
+PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin \
+TERM=xterm \
+/bin/bash --login"
+
+# اختيار الوضع
+clear
+echo -e "${YELLOW}اختر وضع التشغيل:${NC}"
+echo "1) وضع الأوامر (CLI)"
+echo "2) الواجهة الرسومية (XFCE)"
+echo -n "الاختيار [1/2]: "
+read mode
+
+case $mode in
+    2)
+        if ! pgrep -x "termux-x11" >/dev/null; then
+            echo -e "${RED}▶ يلزم تثبيت Termux-X11 أولاً!${NC}"
+            exit 1
+        fi
+        eval "$PROOT_CMD -w /root -b /tmp:/tmp -- /usr/bin/startxfce4"
+        ;;
+    *)
+        eval "$PROOT_CMD"
+        ;;
+esac
+EOF
+
+    chmod +x start-kali
+}
+
+# ------ التنفيذ الرئيسي ------
+set -e
+trap 'echo -e "${RED}[خطأ]${NC} تم الإيقاف!"; exit 1' SIGINT
+
+clear
+echo -e "${GREEN}🛡️  بدء التثبيت الآمن لكالي لينكس 🛡️${NC}"
+
+clean_previous_attempts
+check_dependencies
+install_kali
+post_installation
+gui_installation
+create_launcher
+
+echo -e "\n${GREEN}✅ اكتمل التثبيت بنجاح!${NC}"
+echo -e "${YELLOW}للتشغيل:${NC}"
+echo -e "  ${BLUE}./start-kali${NC}    - وضع الأوامر"
+echo -e "  ${BLUE}./start-kali 2${NC}  - الواجهة الرسومية"
+echo -e "\n${YELLOW}ملاحظة:${NC} السجلات الكاملة في: ${LOG_FILE}"
+
+exit 0

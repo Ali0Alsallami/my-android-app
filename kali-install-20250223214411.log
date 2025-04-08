@@ -1,0 +1,142 @@
+[H[2J[3J[0;32m🛡️  بدء التثبيت الآمن لكالي لينكس 🛡️[0m
+[1;33m[تنظيف][0m بدء عملية التنظيف للمحاولات السابقة...
+[0;34m•[0m إزالة: kali-rootfs.tar.xz
+[0;34m•[0m إزالة: kali.sh
+
+(B[m[36mSupported distributions (format: name < alias >):(B[m
+
+  (B[m[36m* (B[m[33mAdélie Linux (B[m[32m< adelie >(B[m
+  (B[m[36m* (B[m[33mAlpine Linux (B[m[32m< alpine >(B[m
+  (B[m[36m* (B[m[33mArch Linux (B[m[32m< archlinux >(B[m
+  (B[m[36m* (B[m[33mArtix Linux (B[m[32m< artix >(B[m
+  (B[m[36m* (B[m[33mChimera Linux (B[m[32m< chimera >(B[m
+  (B[m[36m* (B[m[33mDebian (bookworm) (B[m[32m< debian >(B[m
+  (B[m[36m* (B[m[33mdeepin (B[m[32m< deepin >(B[m
+  (B[m[36m* (B[m[33mFedora (B[m[32m< fedora >(B[m
+  (B[m[36m* (B[m[33mManjaro (B[m[32m< manjaro >(B[m
+  (B[m[36m* (B[m[33mopenKylin (B[m[32m< openkylin >(B[m
+  (B[m[36m* (B[m[33mOpenSUSE (B[m[32m< opensuse >(B[m
+  (B[m[36m* (B[m[33mPardus (B[m[32m< pardus >(B[m
+  (B[m[36m* (B[m[33mRocky Linux (B[m[32m< rockylinux >(B[m
+  (B[m[36m* (B[m[33mUbuntu (24.04) (B[m[32m< ubuntu >(B[m
+  (B[m[36m* (B[m[33mVoid Linux (B[m[32m< void >(B[m
+
+(B[m[36mInstall selected one with: (B[m[32mproot-distro install <alias>(B[m
+
+[1;33m[التحقق][0m التحقق من المتطلبات الأساسية...
+[0;34m•[0m تثبيت: xz-utils
+Testing the available mirrors:
+[*] (10) https://packages-cf.termux.dev/apt/termux-main: ok
+[*] (1) https://mirror.jeonnam.school/termux/termux-main: bad
+[*] (1) https://termux.niranjan.co/termux-main: bad
+[*] (1) https://mirror.nevacloud.com/applications/termux/termux-main: bad
+[*] (1) https://mirrors.cbrx.io/apt/termux/termux-main: bad
+[*] (1) https://tmx.xvx.my.id/apt/termux-main: bad
+[*] (1) https://mirrors.nguyenhoang.cloud/termux/termux-main: bad
+[*] (1) https://mirror.bardia.tech/termux/termux-main: bad
+[*] (1) https://mirrors.ravidwivedi.in/termux/termux-main: ok
+[*] (1) https://mirror.albony.in/termux/termux-main: bad
+[*] (1) https://mirrors.in.sahilister.net/termux/termux-main/: bad
+[*] (1) https://mirror.rinarin.dev/termux/termux-main: ok
+[*] (1) https://mirrors.saswata.cc/termux/termux-main: ok
+[*] (1) https://mirror.twds.com.tw/termux/termux-main: ok
+[*] (1) https://mirror.textcord.xyz/termux/termux-main: bad
+[*] (1) https://linux.domainesia.com/applications/termux/termux-main: ok
+[*] (1) https://mirror.freedif.org/termux/termux-main: bad
+[*] (1) https://mirrors.krnk.org/apt/termux/termux-main: ok
+[*] (1) https://mirrors.pku.edu.cn/termux/termux-main/: bad
+[*] (1) https://mirrors.sdu.edu.cn/termux/termux-main: ok
+[*] (1) https://mirror.iscas.ac.cn/termux/apt/termux-main: bad
+[*] (1) https://mirrors.cqupt.edu.cn/termux/termux-main: bad
+[*] (1) https://mirrors.aliyun.com/termux/termux-main: bad
+[*] (1) https://mirrors.cernet.edu.cn/termux/apt/termux-main: bad
+[*] (1) https://mirrors.nju.edu.cn/termux/apt/termux-main: ok
+[*] (1) https://mirror.nyist.edu.cn/termux/apt/termux-main: ok
+[*] (1) https://mirrors.bfsu.edu.cn/termux/apt/termux-main: ok
+[*] (1) https://mirrors.tuna.tsinghua.edu.cn/termux/apt/termux-main: bad
+[*] (1) https://mirrors.sau.edu.cn/termux/apt/termux-main: bad
+[*] (1) https://mirrors.hust.edu.cn/termux/apt/termux-main: ok
+[*] (1) https://mirrors.zju.edu.cn/termux/apt/termux-main: bad
+[*] (1) https://mirrors.sustech.edu.cn/termux/apt/termux-main: ok
+[*] (1) https://mirrors.ustc.edu.cn/termux/termux-main: ok
+[*] (1) https://mirror.sjtu.edu.cn/termux/termux-main/: bad
+[*] (1) https://md.mirrors.hacktegic.com/termux/termux-main: bad
+[*] (1) https://mirror.termux.dev/termux-main: bad
+[*] (1) https://termux.librehat.com/apt/termux-main: bad
+[*] (1) https://ftp.agdsn.de/termux/termux-main: ok
+[*] (1) https://mirror.mwt.me/termux/main: ok
+[*] (1) https://mirror.leitecastro.com/termux/termux-main: bad
+[*] (1) https://mirrors.cfe.re/termux/termux-main: bad
+[*] (1) https://is.mirror.flokinet.net/termux/termux-main: bad
+[*] (1) https://mirrors.de.sahilister.net/termux/termux-main: ok
+[*] (1) https://termux.mentality.rip/termux-main: bad
+[*] (1) https://ftp.fau.de/termux/termux-main: bad
+[*] (1) https://mirror.accum.se/mirror/termux.dev/termux-main: bad
+[*] (1) https://nl.mirror.flokinet.net/termux/termux-main: bad
+[*] (1) https://packages.termux.dev/apt/termux-main: bad
+[*] (1) https://mirror.bouwhuis.network/termux/termux-main: bad
+[*] (1) https://termux.cdn.lumito.net/termux-main: bad
+[*] (1) https://ro.mirror.flokinet.net/termux/termux-main: bad
+[*] (1) https://mirror.autkin.net/termux/termux-main: bad
+[*] (1) https://mirrors.medzik.dev/termux/termux-main: bad
+[*] (1) https://mirror.polido.pt/termux/termux-main: bad
+[*] (1) https://termux.3san.dev/termux/termux-main: bad
+[*] (1) https://mirror.sunred.org/termux/termux-main: bad
+[*] (4) https://grimler.se/termux/termux-main: bad
+[*] (1) https://mirrors.utermux.dev/termux/termux-main: bad
+[*] (1) https://plug-mirror.rcac.purdue.edu/termux/termux-main: bad
+[*] (1) https://mirror.quantum5.ca/termux/termux-main: bad
+[*] (1) https://mirror.fcix.net/termux/termux-main: ok
+[*] (1) https://mirror.mwt.me/termux/main: ok
+[*] (1) https://gnlug.org/pub/termux/termux-main: ok
+[*] (1) https://mirror.vern.cc/termux/termux-main: ok
+[*] (1) https://dl.kcubeterm.com/termux-main: bad
+[*] (1) https://termux.danyael.xyz/termux/termux-main: ok
+[*] (1) https://mirror.csclub.uwaterloo.ca/termux/termux-main: bad
+[*] (1) https://mirrors.middlendian.com/termux/termux-main: bad
+[*] (1) https://repository.su/termux/termux-main/: ok
+[*] (1) http://mirror.mephi.ru/termux/termux-main: ok
+Picking mirror: (11) /data/data/com.termux/files/usr/etc/termux/mirrors/asia/mirror.rinarin.dev
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Get:1 https://mirror.rinarin.dev/termux/termux-main stable InRelease [14.0 kB]
+Get:2 https://mirror.rinarin.dev/termux/termux-x11 x11 InRelease [14.0 kB]
+Get:3 https://mirror.rinarin.dev/termux/termux-main stable/main aarch64 Packages [536 kB]
+Get:4 https://mirror.rinarin.dev/termux/termux-x11 x11/main aarch64 Packages [152 kB]
+Fetched 716 kB in 29s (24.8 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+6 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+xz-utils is already the newest version (5.6.4).
+0 upgraded, 0 newly installed, 0 to remove and 6 not upgraded.
+[1;33m[تثبيت][0m بدء التثبيت الجديد...
+
+(B[m[1m[31mError: option '(B[m[33m--override-alias(B[m[1m[31m' requires an argument.(B[m
+
+(B[m[1m[33mUsage: (B[m[1m[36mproot-distro (B[m[32minstall (B[m[36m[(B[m[32mOPTIONS(B[m[36m] [(B[m[32mDISTRIBUTION ALIAS(B[m[36m](B[m
+
+(B[m[36mCommand aliases: (B[m[32madd(B[m[36m, (B[m[32mi(B[m[36m, (B[m[32min(B[m[36m, (B[m[32mins(B[m
+
+(B[m[36mInstall a specified Linux distribution.(B[m
+
+(B[m[36mOptions:(B[m
+
+  (B[m[32m--help                         (B[m[36m- Show this help information.(B[m
+
+  (B[m[32m--override-alias [new alias]   (B[m[36m- Set a custom alias for installed(B[m
+                                   (B[m[36mdistribution.(B[m
+
+(B[m[36mSelected distribution should be referenced by alias which can be(B[m
+(B[m[36mobtained by this command: (B[m[32mproot-distro list(B[m
+
+(B[m[3m[36mProot-Distro v4.22.1 by Termux (@sylirre).(B[m
+
+[0;31m[خطأ][0m فشل التثبيت! راجع kali-install-20250223214411.log

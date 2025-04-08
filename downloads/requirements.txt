@@ -1,0 +1,6 @@
+requests
+tqdm
+pydantic
+scikit-learn
+fpdf
+

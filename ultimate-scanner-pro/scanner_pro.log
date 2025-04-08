@@ -1,0 +1,17 @@
+2025-04-07 18:12:36,345 - WARNING - Failed to fetch https://example.com/sitemap.xml: 
+2025-04-07 18:18:08,472 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7860118080>
+2025-04-07 18:27:08,109 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x79c6ba4380>
+2025-04-07 18:28:45,342 - WARNING - Failed to fetch https://testphp.vulnweb.com/index.html: 
+2025-04-07 18:28:45,344 - WARNING - Failed to fetch https://testphp.vulnweb.com/admin: 
+2025-04-07 18:28:45,346 - WARNING - Failed to fetch https://testphp.vulnweb.com/backup.sql: 
+2025-04-07 18:28:45,347 - WARNING - Failed to fetch https://testphp.vulnweb.com/admin.php: 
+2025-04-07 18:28:45,349 - WARNING - Failed to fetch https://testphp.vulnweb.com/sitemap.xml: 
+2025-04-07 18:28:45,352 - WARNING - Failed to fetch https://testphp.vulnweb.com/robots.txt: 
+2025-04-07 18:28:45,355 - WARNING - Failed to fetch https://testphp.vulnweb.com/wp-login.php: 
+2025-04-07 18:28:45,358 - WARNING - Failed to fetch https://testphp.vulnweb.com/config: 
+2025-04-07 18:28:45,360 - WARNING - Failed to fetch https://testphp.vulnweb.com/phpinfo.php: 
+2025-04-07 18:28:45,363 - WARNING - Failed to fetch https://testphp.vulnweb.com/.env: 
+2025-04-07 18:28:45,365 - WARNING - Failed to fetch https://testphp.vulnweb.com/login: 
+2025-04-07 18:28:45,367 - WARNING - Failed to fetch https://testphp.vulnweb.com/dashboard: 
