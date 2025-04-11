@@ -5,14 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Install coreutils
+    - name: Install coreutils and git
       run: |
         sudo apt-get update
-        sudo apt-get install -y coreutils
-    - name: Install Git
+        sudo apt-get install -y coreutils git
+    - name: Verify Git installation
       run: |
-        sudo apt-get update
-        sudo apt-get install -y git
+        which git
+        git --version
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -63,7 +63,7 @@ jobs:
       env:
         ANDROID_HOME: $HOME/android-sdk
         ANT_HOME: $HOME/apache-ant-1.9.4
-        PATH: $PATH:$HOME/apache-ant-1.9.4/bin:$HOME/android-sdk/cmdline-tools/latest/bin
+        PATH: $PATH:$HOME/apache-ant-1.9.4/bin:$HOME/android-sdk/cmdline-tools/latest/bin:/usr/bin:/usr/local/bin
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
