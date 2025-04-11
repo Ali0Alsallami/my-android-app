@@ -1,0 +1,63 @@
+name: Build APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.8'
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libffi-dev libssl-dev zlib1g-dev libncurses5-dev openjdk-17-jdk unzip
+    - name: Install Apache ANT
+      run: |
+        wget https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.4-bin.tar.gz -O ant.tar.gz
+        tar xzf ant.tar.gz -C $HOME
+        echo "export ANT_HOME=$HOME/apache-ant-1.9.4" >> $GITHUB_ENV
+        echo "export PATH=$PATH:$ANT_HOME/bin" >> $GITHUB_ENV
+    - name: Install Android SDK Command Line Tools
+      run: |
+        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+        mkdir -p $HOME/android-sdk/cmdline-tools
+        unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools
+        mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+        echo "export ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+        echo "export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_ENV
+    - name: Accept Android SDK licenses and install Build Tools
+      run: |
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "build-tools;33.0.0" "platforms;android-27"
+    - name: Install Python dependencies
+      run: |
+        pip install --upgrade pip
+        pip install buildozer kivy cython==0.29.36
+    - name: Build APK
+      run: |
+        buildozer init
+        echo "[app]" > buildozer.spec
+        echo "title = My App" >> buildozer.spec
+        echo "package.name = myapp" >> buildozer.spec
+        echo "package.domain = org.test" >> buildozer.spec
+        echo "source.dir = ." >> buildozer.spec
+        echo "source.include_exts = py,png,jpg,kv,atlas" >> buildozer.spec
+        echo "requirements = python3,kivy" >> buildozer.spec
+        echo "android.api = 27" >> buildozer.spec
+        echo "android.minapi = 21" >> buildozer.spec
+        echo "android.ndk = 19b" >> buildozer.spec
+        echo "android.sdk_path = $ANDROID_HOME" >> buildozer.spec
+        echo "[buildozer]" >> buildozer.spec
+        echo "log_level = 2" >> buildozer.spec
+        cat buildozer.spec
+        buildozer android debug --verbose
+      env:
+        ANDROID_HOME: $HOME/android-sdk
+        ANT_HOME: $HOME/apache-ant-1.9.4
+        PATH: $PATH:$HOME/apache-ant-1.9.4/bin:$HOME/android-sdk/cmdline-tools/latest/bin
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: myapp-apk
+        path: bin/*.apk
