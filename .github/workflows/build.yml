@@ -5,6 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Install coreutils
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y coreutils
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -50,7 +54,6 @@ jobs:
         echo "android.sdk_path = $ANDROID_HOME" >> buildozer.spec
         echo "[buildozer]" >> buildozer.spec
         echo "log_level = 2" >> buildozer.spec
-        cat buildozer.spec
         buildozer android debug --verbose
       env:
         ANDROID_HOME: $HOME/android-sdk
